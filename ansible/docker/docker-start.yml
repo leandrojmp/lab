@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  gather_facts: no
+  
+  tasks:
+    - name: start docker
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+      become: yes
+      become_user: root

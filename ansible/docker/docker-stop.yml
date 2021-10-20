@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: no
+  
+  tasks:
+    - name: stop docker
+      ansible.builtin.systemd:
+        name: docker
+        state: stopped
+      become: yes
+      become_user: root
+    
+    - name: stop docker.socket
+      ansible.builtin.systemd:
+        name: docker.socket
+        state: stopped
+      become: yes
+      become_user: root
