@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  gather_facts: no
+  
+  tasks:
+    - name: "install apt pkg"
+      ansible.builtin.apt:
+        pkg:
+        - jq
+      become: yes
+      become_user: root
