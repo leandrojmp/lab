@@ -6,6 +6,16 @@
     - name: "install apt pkg"
       ansible.builtin.apt:
         pkg:
+        - build-essential
+        - curl
+        - vim
+        - fonts-powerline
+        - tmux
+        - screen
+        - htop
+        - dos2unix
+        - whois
+        - nmap
         - jq
       become: yes
       become_user: root
