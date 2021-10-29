@@ -1,0 +1,76 @@
+---
+- hosts: base
+  gather_facts: no
+  
+  tasks:
+    - name: "install vim"
+      ansible.builtin.yum:
+        name: vim
+        state: present
+      become: yes
+
+    - name: "install htop"
+      ansible.builtin.yum:
+        name: htop
+        state: present
+      become: yes
+
+    - name: "install telnet"
+      ansible.builtin.yum:
+        name: telnet
+        state: present
+      become: yes
+
+    - name: "install wget"
+      ansible.builtin.yum:
+        name: wget
+        state: present
+      become: yes
+
+    - name: "install git"
+      ansible.builtin.yum:
+        name: git
+        state: present
+      become: yes
+
+    - name: "install dos2unix"
+      ansible.builtin.yum:
+        name: dos2unix
+        state: present
+      become: yes
+    
+    - name: "install whois"
+      ansible.builtin.yum:
+        name: whois
+        state: present
+      become: yes
+      
+    - name: "install nmap"
+      ansible.builtin.yum:
+        name: nmap
+        state: present
+      become: yes
+
+    - name: "install jq"
+      ansible.builtin.yum:
+        name: jq
+        state: present
+      become: yes
+    
+    - name: "install tar"
+      ansible.builtin.yum:
+        name: tar
+        state: present
+      become: yes
+
+    - name: "install zip"
+      ansible.builtin.yum:
+        name: zip
+        state: present
+      become: yes
+
+    - name: "install lsof"
+      ansible.builtin.yum:
+        name: lsof
+        state: present
+      become: yes

@@ -1,0 +1,10 @@
+---
+- hosts: lab
+  gather_facts: no
+  
+  tasks:
+    - name: "update packages"
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+      become: yes
