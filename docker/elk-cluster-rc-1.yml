@@ -1,4 +1,4 @@
-ersion: '2.2'
+version: '2.2'
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0-rc1
