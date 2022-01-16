@@ -74,3 +74,9 @@
         name: lsof
         state: present
       become: yes
+
+    - name: "net-tools"
+      ansible.builtin.yum:
+        name: net-tools
+        state: present
+      become: yes
