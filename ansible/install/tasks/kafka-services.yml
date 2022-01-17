@@ -1,0 +1,61 @@
+---
+  - name: "service: kafka.service"
+    copy:
+      content: |
+        #/etc/systemd/system/kafka.service
+        #
+        [Unit]
+        Description=Kafka Service
+        Requires=zookeeper.service
+        After=zookeeper.service
+        [Service]
+        Type=simple
+        User=kafka
+        ExecStart=/bin/sh -c '/usr/local/bin/kafka-server-start.sh /var/opt/kafka/config/server.properties'
+        ExecStop=/usr/local/bin/kafka-server-stop.sh
+        Environment="LOG_DIR=/var/opt/kafka/logs"
+        Restart=on-abnormal
+        LimitNOFILE=256000
+        [Install]
+        WantedBy=multi-user.target
+      dest: /etc/systemd/system/kafka.service
+    become: yes
+  - name: "service: zookeeper.service"
+    copy:
+      content: |
+        # /etc/systemd/system/zookeeper.service
+        # zookeeper
+        [Unit]
+        Description=ZooKeeper Service
+        Requires=network.target remote-fs.target
+        After=network.target remote-fs.target
+            
+        [Service]
+        Type=simple
+        User=kafka
+        ExecStart=/usr/local/bin/zookeeper-server-start.sh /var/opt/kafka/config/zookeeper.properties
+        ExecStop=/usr/local/bin/zookeeper-server-stop.sh
+        Environment="LOG_DIR=/var/opt/kafka/logs"
+        Restart=on-abnormal
+            
+        [Install]
+        WantedBy=multi-user.target
+      dest: /etc/systemd/system/zookeeper.service
+    become: yes
+  - name: "habilita zookeeper.service"
+    systemd:
+      name: zookeeper
+      state: stopped
+      enabled: yes
+    become: yes
+  - name: "habilita kafka.service"
+    systemd:
+      name: kafka
+      state: stopped
+      enabled: yes
+    become: yes
+  - name: "systemd daemon reload"
+    systemd:
+      daemon_reload: yes
+    become: yes
+...

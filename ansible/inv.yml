@@ -10,3 +10,12 @@ all:
       vars:
         ansible_python_interpreter: /usr/bin/python3
         ansible_connection: ssh
+    kafkas:
+      hosts:
+        kafka:
+          zookeeper_id: 1
+          broker_id: 0
+          host_ip: 10.0.1.30
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+        ansible_connection: ssh

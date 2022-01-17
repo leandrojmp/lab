@@ -1,0 +1,17 @@
+---
+- hosts: kafka
+  gather_facts: false
+
+  tasks:
+    - name: "setup hosts"
+      setup:
+        gather_subset:
+          - network
+    - name: "kafka pre-install"
+      include: tasks/kafka-pre-install.yml
+    - name: "kafka cria scripts"
+      include: tasks/kafka-scripts.yml
+    - name: "kafka cria config"
+      include: tasks/kafka-config-1-node.yml
+    - name: "kafka cria services"
+      include: tasks/kafka-services.yml

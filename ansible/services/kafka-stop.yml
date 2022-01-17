@@ -1,0 +1,15 @@
+---
+- hosts: kafka
+  gather_facts: false
+
+  tasks:
+  - name: "para kafka.service"
+    systemd:
+      name: kafka
+      state: stopped
+    become: yes
+  - name: "para zookeeper.service"
+    systemd:
+      name: zookeeper
+      state: stopped
+    become: yes

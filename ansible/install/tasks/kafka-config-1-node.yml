@@ -1,0 +1,65 @@
+---
+  - name: "config: kafka server.properties"
+    copy:
+      content: |
+        # broker id
+        broker.id={{ broker_id }}
+        #
+        # listener
+        advertised.listeners=INTERNAL://{{ ansible_all_ipv4_addresses[0] }}:9093,EXTERNAL://{{ ansible_all_ipv4_addresses[0] }}:9092
+        listeners=INTERNAL://{{ ansible_all_ipv4_addresses[0] }}:9093,EXTERNAL://{{ ansible_all_ipv4_addresses[0] }}:9092
+        listener.security.protocol.map = INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+        inter.broker.listener.name = INTERNAL
+        # diretorio para armazenar os logs dos topicos
+        log.dirs=/var/opt/kafka/data
+        # expira msgs em 4h (14400000 ms)
+        log.retention.ms=14400000
+        # tamanho máximo por partição (2GB, tópico com 2 partições: 4 GB)
+        log.retention.bytes=2147483648
+        # limita tamanho do segumento a 64 MB
+        log.segment.bytes=67108864
+        # verifica segmentos para deletar a cada 30s
+        log.retention.check.interval.ms=30000
+        # deleta segmentos marcados como .deleted a cada 30s
+        log.segment.delete.delay.ms=30000
+        # marca o tempo da mensagem de acordo com o recebimento
+        log.message.timestamp.type=LogAppendTime
+        # tempo de retenção dos offsets (24h, 1440 minutos)
+        offsets.retention.minutes=1440
+        # offset replication pra 1 node
+        offsets.topic.replication.factor=1
+        #
+        # partitions e replicas (config para 1 broker)
+        num.partitions=1
+        default.replication.factor=1
+        #
+        # zookeeper
+        zookeeper.connect={{ groups['kafkas'] | map('extract', hostvars, ['host_ip']) | join(':2181,') }}:2181
+        #
+        # connect timeout
+        zookeeper.connection.timeout.ms=6000
+      dest: /var/opt/kafka/config/server.properties
+    become: yes
+    with_items: "{{ groups.kafkas }}"
+  - name: "config: zookeeper zookeeper.properies"
+    copy:
+      content: |
+        # diretorio para o snapshot
+        dataDir=/var/opt/kafka/zookeeper
+        # diretorio para os logs do zookeeper
+        dataLogDir=/var/opt/kafka/zookeeper/logs
+        # porta e ip para conexao
+        clientPort=2181
+        clientPortAddress={{ ansible_all_ipv4_addresses[0] }}
+        # desabilitar limites de conexao por ip
+        #maxClientCnxns=1024
+        # sincronizacao
+        tickTime=3000
+        initLimit=10
+        syncLimit=5
+        # desabilita endpoint admin
+        admin.enableServer=false
+      dest: /var/opt/kafka/config/zookeeper.properties
+    become: yes
+    with_items: "{{ groups.kafkas }}"
+...

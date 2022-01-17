@@ -1,0 +1,70 @@
+---
+  - name: "cria usuario kafka"
+    user:
+      name: kafka
+      comment: kafka user
+    become: yes
+
+  - name: "download kafka"
+    get_url:
+      url: https://archive.apache.org/dist/kafka/2.8.1/kafka_2.13-2.8.1.tgz
+      dest: /tmp/kafka_2.13-2.8.1.tgz
+
+  - name: "remove /var/opt/kafka"
+    file:
+      path: /var/opt/kafka
+      state: absent
+    become: yes
+
+  - name: "descompacta kafka"
+    unarchive:
+      src: /tmp/kafka_2.13-2.8.1.tgz
+      dest: /var/opt/
+      remote_src: yes
+    become: yes
+
+  - name: "renomeia diretorio para /var/opt/kafka"
+    command: mv /var/opt/kafka_2.13-2.8.1 /var/opt/kafka
+    become: yes
+
+  - name: "cria diretorio de dados"
+    file:
+      path: /var/opt/kafka/data
+      state: directory
+      mode: '0755'
+      owner: kafka
+      group: kafka
+    become: yes
+
+  - name: "cria diretorio de logs"
+    file:
+      path: /var/opt/kafka/logs
+      state: directory
+      mode: '0755'
+      owner: kafka
+      group: kafka
+    become: yes
+
+  - name: "cria diretorio pro zookeeper"
+    file:
+      path: /var/opt/kafka/zookeeper
+      state: directory
+      mode: '0755'
+      owner: kafka
+      group: kafka
+    become: yes
+  - name: "cria diretorio pros logs do zookeeper"
+    file:
+      path: /var/opt/kafka/zookeeper/logs
+      state: directory
+      mode: '0755'
+      owner: kafka
+      group: kafka
+    become: yes
+  - name: "cria zookeeper myid"
+    copy:
+      content: |
+        {{ zookeeper_id }}
+      dest: /var/opt/kafka/zookeeper/myid
+    become: yes
+...
