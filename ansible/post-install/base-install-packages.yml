@@ -80,3 +80,9 @@
         name: net-tools
         state: present
       become: yes
+
+    - name: "strace"
+          ansible.builtin.yum:
+            name: strace
+            state: present
+          become: yes
