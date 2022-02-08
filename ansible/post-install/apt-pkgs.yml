@@ -19,5 +19,6 @@
         - jq
         - peek
         - vlc
+        - fonts-inconsolata
       become: yes
       become_user: root
