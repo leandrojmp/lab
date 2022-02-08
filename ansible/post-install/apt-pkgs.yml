@@ -17,5 +17,7 @@
         - whois
         - nmap
         - jq
+        - peek
+        - vlc
       become: yes
       become_user: root
