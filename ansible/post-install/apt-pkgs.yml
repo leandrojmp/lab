@@ -20,5 +20,8 @@
         - peek
         - vlc
         - fonts-inconsolata
+        - gnupg2
+        - ffmepgthumbnailer
+        - gstreamer1.0-libav
       become: yes
       become_user: root
