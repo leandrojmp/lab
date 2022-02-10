@@ -19,9 +19,20 @@
         - jq
         - peek
         - vlc
+        - ansible
         - fonts-inconsolata
         - gnupg2
-        - ffmepgthumbnailer
+        - ffmpegthumbnailer
         - gstreamer1.0-libav
+      become: yes
+      become_user: root
+    - name: "apt autoclean"
+      apt:
+        autoclean: yes
+      become: yes
+      become_user: root
+    - name: "apt autoremove"
+      apt:
+        autoremove: yes
       become: yes
       become_user: root

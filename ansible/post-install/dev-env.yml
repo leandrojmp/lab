@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  gather_facts: no
+  
+  tasks:
+    - name: "instala python3-pip"
+      apt:
+        name: python3-pip
+        state: present
+      become: yes
+      become_user: root
